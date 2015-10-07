@@ -5,19 +5,40 @@ from django.db import models
 
 
 class Rater(models.Model):
-    userid = models.IntegerField()
+    # id is automatic
+
+    MALE = 'M'
+    FEMALE = 'F'
+    OTHER = 'O'
+    GENDER_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (OTHER, 'Other'),
+        (X, 'Did not answer'),
+    )
     age = models.IntegerField()
-    gender = models.CharField(max_length=1)
-    occupation = models.IntegerField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    occupation = models.CharField(max_length=40)
     zipcode = models.CharField(max_length=10)
+
+    def __str__(self):
+        return str(self.id)
 
 
 class Movie(models.Model):
-    movieid = models.IntegerField()
-    movietitle = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
+
+    def average_rating(self):
+        return self.rating_set.aggregate(models.Avg('stars'))['stars_avg']
+
+    def __str__(self):
+        return self.title
 
 
 class Rating(models.Model):
-    userid = models.ForeignKey(Rater)
-    movieid = models.ForeignKey(Movie)
-    rating = models.IntegerField()
+    stars = models.PositiveSmallIntegerField()
+    user = models.ForeignKey(Rater)
+    movie = models.ForeignKey(Movie)
+
+    def __str__(self):
+        return '@{} gives {} a {}*'.format(self.user, self.movie, self.stars)
