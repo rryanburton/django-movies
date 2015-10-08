@@ -44,7 +44,7 @@ class Rating(models.Model):
         return '@{} gives {} a {}*'.format(self.user, self.movie, self.stars)
 
 
-def load_ml_data():
+def load_user_data():
     import csv
     import json
     users = []
@@ -64,7 +64,55 @@ def load_ml_data():
                 'model': 'movies.Rater',
                 'pk': int(row['UserID']),
             }
-
             users.append(user)
-        with open('users.json', 'w') as f:
-            f.write(json.dumps(users))
+
+    with open('users.json', 'w') as f:
+        f.write(json.dumps(users))
+
+
+def load_movie_data():
+    import csv
+    import json
+    movies = []
+    with open('ml-1m/movies.dat', encoding='windows-1252') as f:
+        reader = csv.DictReader(
+            [line.replace('::', '\t') for line in f],
+            fieldnames='MovieID::Title::Genres'.split('::'),
+            delimiter='\t')
+        for row in reader:
+            movie = {
+                'fields': {
+                    'title': row['Title'],
+                },
+                'model': 'movies.Movie',
+                'pk': int(row['MovieID']),
+            }
+            movies.append(movie)
+
+    with open('movies.json', 'w') as f:
+        f.write(json.dumps(movies))
+
+
+def load_ratings_data():
+    import csv
+    import json
+    ratings = []
+    with open('ml-1m/ratings.dat') as f:
+        reader = csv.DictReader(
+            [line.replace('::', '\t') for line in f],
+            fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
+            delimiter='\t')
+        for row in reader:
+            rating = {
+                'fields': {
+                    'userid': row['UserID'],
+                    'movieid': row['MovieID'],
+                    'rating': row['Rating'],
+                },
+                'model': 'movies.Rating',
+                'pk': int(row['MovieID']),
+            }
+            ratings.append(rating)
+
+    with open('ratings.json', 'w') as f:
+        f.write(json.dumps(ratings))
