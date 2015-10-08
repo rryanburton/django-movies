@@ -105,12 +105,12 @@ def load_ratings_data():
         for row in reader:
             rating = {
                 'fields': {
-                    'userid': row['UserID'],
-                    'movieid': row['MovieID'],
-                    'rating': row['Rating'],
+                    'user': row['UserID'],
+                    'movie': row['MovieID'],
+                    'stars': row['Rating'],
                 },
                 'model': 'movies.Rating',
-                'pk': int(row['MovieID']),
+
             }
             ratings.append(rating)
 
