@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 
 
@@ -10,11 +9,12 @@ class Rater(models.Model):
     MALE = 'M'
     FEMALE = 'F'
     OTHER = 'O'
+    X = 'X'
     GENDER_CHOICES = (
         (MALE, 'Male'),
         (FEMALE, 'Female'),
         (OTHER, 'Other'),
-        # (X, 'Did not answer'),
+        (X, 'Did not answer'),
     )
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
@@ -37,11 +37,11 @@ class Movie(models.Model):
 
 class Rating(models.Model):
     stars = models.PositiveSmallIntegerField()
-    user = models.ForeignKey(Rater)
+    rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
 
     def __str__(self):
-        return '@{} gives {} a {}*'.format(self.user, self.movie, self.stars)
+        return '@{} gives {} a {}*'.format(self.rater, self.movie, self.stars)
 
 
 def load_user_data():
@@ -96,7 +96,9 @@ def load_movie_data():
 def load_ratings_data():
     import csv
     import json
+
     ratings = []
+
     with open('ml-1m/ratings.dat') as f:
         reader = csv.DictReader(
             [line.replace('::', '\t') for line in f],
@@ -110,7 +112,6 @@ def load_ratings_data():
                     'stars': row['Rating'],
                 },
                 'model': 'movies.Rating',
-
             }
             ratings.append(rating)
 

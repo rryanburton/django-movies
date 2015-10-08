@@ -1,0 +1,16 @@
+<h2>{{ rater.pk }}  </h2>
+
+<dl>
+  <dt>Gender</dt>
+    <dd>{{ rater.gender }}</dd>
+  <dt>Age</dt>
+    <dd>{{ rater.age}}</dd>
+  <dt>Zip Code/dt>
+    <dd>{{ rater.zipcode }}</dd>
+
+</dl>
+
+
+<ul>
+  {{% for rating in rater.rating_set.all %}}
+<li> <a href="{% url }"{{ rating.rater }} - {{ rating.stars }} </li>
