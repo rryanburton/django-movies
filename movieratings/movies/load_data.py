@@ -4,6 +4,10 @@ import json
 
 ml_dir = '../ml-1m'
 
+ratingsjson = 'fixtures/ratings.json'
+ratersjson = 'fixtures/raters.json'
+moviesjson = 'fixtures/movies.json'
+
 
 def load_rater_data():
     raters = []
@@ -25,7 +29,7 @@ def load_rater_data():
             }
             raters.append(rater)
 
-    with open('fixtures/raters.json', 'w') as f:
+    with open(ratersjson, 'w') as f:
         f.write(json.dumps(raters))
 
 
@@ -46,13 +50,12 @@ def load_movie_data():
             }
             movies.append(movie)
 
-    with open('fixtures/movies.json', 'w') as f:
+    with open(moviesjson, 'w') as f:
         f.write(json.dumps(movies))
 
 
 def load_ratings_data():
     ratings = []
-
     with open(ml_dir + '/ratings.dat') as f:
         reader = csv.DictReader(
             [line.replace('::', '\t') for line in f],
@@ -69,20 +72,22 @@ def load_ratings_data():
             }
             ratings.append(rating)
 
-    with open('fixtures/ratings.json', 'w') as f:
+    with open(ratingsjson, 'w') as f:
         f.write(json.dumps(ratings))
 
 
 def load_all_data():
-    print("\nstarting raters data")
+    print("\nstarting {}".format(ratersjson))
     load_rater_data()
-    print("raters.json ready!\n")
-    print("starting movies data")
+    print("{} ready!\n".format(ratersjson))
+
+    print("starting {}".format(moviesjson))
     load_movie_data()
-    print("movies.json ready!\n")
-    print("starting ratings data")
+    print("{} ready!\n".format(moviesjson))
+
+    print("starting {}".format(ratingsjson))
     load_ratings_data()
-    print("ratings.json ready!\n")
+    print("{} ready!\n".format(ratingsjson))
 
 
 load_all_data()
