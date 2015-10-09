@@ -1,20 +1,21 @@
 from django.shortcuts import render
-from .models import Movie
-from django.db.models import annotate, avg, count
+from django.db.models import Avg, Count
+
+from .models import Movie, Rater
+
+
 # Create your views here.
 
 
 def movie_detail(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
-    # ratings = movie.ratings_set.all()
-
     return render(request,
                   'movies/movie_detail.html',
                   {'movie': movie})
 
 
 def rater_detail(request, rater_id):
-    rater = Movie.objects.get(pk=rater_id)
+    rater = Rater.objects.get(pk=rater_id)
     movie_ratings = []
     for rating in rater.rating_set.all():
         movie_ratings.append({
@@ -28,14 +29,11 @@ def rater_detail(request, rater_id):
 
 
 def top_movies(request):
-    for movie in Movie.objects.all():
-        if type(movie.average_rating()) == float:
-            movie_list.append(movie)
     popular_movies = Movie.objects.annotate(num_ratings=Count('rating')) \
-        .filter(num_ratings_gte=50)
-    movies = Movie.objects.annotate(Avg('rating__stars')) \
+        .filter(num_ratings__gte=50)
+    movies = popular_movies.annotate(Avg('rating__stars')) \
         .order_by('-rating__stars__avg')[:20]
 
     return render(request,
                   'movies/top_movies.html',
-                  {})
+                  {'movies': movies})

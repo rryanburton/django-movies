@@ -22,14 +22,14 @@ class Rater(models.Model):
     zipcode = models.CharField(max_length=5)
 
     def __str__(self):
-        return str(self.id)
+        return '{}'.format(self.id)
 
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
 
     def average_rating(self):
-        return self.rating_set.aggregate(models.Avg('stars'))['stars_avg']
+        return self.rating_set.aggregate(models.Avg('stars'))['stars__avg']
 
     def __str__(self):
         return self.title
@@ -44,17 +44,17 @@ class Rating(models.Model):
         return '@{} gives {} a {}*'.format(self.rater, self.movie, self.stars)
 
 
-def load_user_data():
+def load_rater_data():
     import csv
     import json
-    users = []
+    raters = []
     with open('ml-1m/users.dat') as f:
         reader = csv.DictReader(
             [line.replace('::', '\t') for line in f],
             fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split('::'),
             delimiter='\t')
         for row in reader:
-            user = {
+            rater = {
                 'fields': {
                     'gender': row['Gender'],
                     'age': row['Age'],
@@ -64,10 +64,10 @@ def load_user_data():
                 'model': 'movies.Rater',
                 'pk': int(row['UserID']),
             }
-            users.append(user)
+            raters.append(rater)
 
-    with open('users.json', 'w') as f:
-        f.write(json.dumps(users))
+    with open('raters.json', 'w') as f:
+        f.write(json.dumps(raters))
 
 
 def load_movie_data():
@@ -107,7 +107,7 @@ def load_ratings_data():
         for row in reader:
             rating = {
                 'fields': {
-                    'user': row['UserID'],
+                    'rater': row['UserID'],
                     'movie': row['MovieID'],
                     'stars': row['Rating'],
                 },
