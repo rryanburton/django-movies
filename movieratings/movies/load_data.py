@@ -74,8 +74,15 @@ def load_ratings_data():
 
 
 def load_all_data():
+    print("\nstarting raters data")
     load_rater_data()
+    print("raters.json ready!\n")
+    print("starting movies data")
     load_movie_data()
+    print("movies.json ready!\n")
+    print("starting ratings data")
     load_ratings_data()
+    print("ratings.json ready!\n")
+
 
 load_all_data()
