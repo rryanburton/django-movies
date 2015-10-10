@@ -35,7 +35,7 @@ class Rater(models.Model):
 
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    occupation = models.IntegerField(max_length=2, choices=OCCUPATION_CHOICES)
+    occupation = models.IntegerField(choices=OCCUPATION_CHOICES)
     zipcode = models.CharField(max_length=10)
 
     def __str__(self):
@@ -56,7 +56,7 @@ class Rating(models.Model):
         (3, "3"),
         (4, "4"),
         (5, "5"),)
-    stars = models.IntegerField(max_length=1, choices=STARS_CHOICES)
+    stars = models.IntegerField(choices=STARS_CHOICES)
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
 
