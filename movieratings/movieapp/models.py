@@ -4,7 +4,6 @@ from django.db import models
 
 
 class Rater(models.Model):
-    # id is automatic
     MALE = 'M'
     FEMALE = 'F'
     GENDER_CHOICES = (
@@ -36,13 +35,30 @@ class Rater(models.Model):
 
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    occupation = models.CharField(max_length=2, choices=OCCUPATION_CHOICES)
-    zipcode = models.CharField(max_length=5)
+    occupation = models.IntegerField(max_length=2, choices=OCCUPATION_CHOICES)
+    zipcode = models.CharField(max_length=10)
+
+    def __str__(self):
+        return "user #" + str(self.pk)
 
 
 class Movie(models.Model):
-    pass
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
 
 
 class Rating(models.Model):
-    pass
+    STARS_CHOICES = (
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),)
+    stars = models.IntegerField(max_length=1, choices=STARS_CHOICES)
+    rater = models.ForeignKey(Rater)
+    movie = models.ForeignKey(Movie)
+
+    def __str__(self):
+        return self.rater.pk + self.movie.title + self.rating
