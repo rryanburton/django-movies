@@ -3,4 +3,4 @@
 .direnv
 __pycache__
 /ml-1m
-/fixtures
+/movieratings/fixtures
