@@ -1,0 +1,25 @@
+{% extends "movieapp/base.html" %} {% block content %}
+
+<h2 align="center">Rater: {{ rater.pk }}</h2>
+
+
+
+
+  <ul>
+    <li>Gender: {{ rater.gender }}</li>
+    <li>Age: {{ rater.age}}</li>
+    <li>Zip Code: {{ rater.zipcode }}</li>
+    <li>Occupation: {{ rater.occupation }}</li>
+
+  </ul>
+
+
+  <ul>
+    {% for rating in movie_ratings %}
+    <li> <a href="{% url 'movie_details' rating.movie.pk %}">{{ rating.movie }}</a> - {{ rating.stars }}</li>
+    {% endfor %}
+  </ul>
+
+
+
+{% endblock %}

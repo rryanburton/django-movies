@@ -43,7 +43,7 @@ def load_raters_data():
                     'occupation': row['Occupation'],
                     'zipcode': row['Zip-code'],
                 },
-                'model': 'movies.Rater',
+                'model': 'movieapp.Rater',
                 'pk': int(row['UserID']),
             }
             raters.append(rater)
@@ -66,7 +66,7 @@ def load_ratings_data():
                     'movie': row['MovieID'],
                     'stars': row['Rating'],
                 },
-                'model': 'movies.Rating',
+                'model': 'movieapp.Rating',
             }
             ratings.append(rating)
 
@@ -86,7 +86,7 @@ def load_movies_data():
                 'fields': {
                     'title': row['Title'],
                 },
-                'model': 'movies.Movie',
+                'model': 'movieapp.Movie',
                 'pk': int(row['MovieID']),
             }
             movies.append(movie)

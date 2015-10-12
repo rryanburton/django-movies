@@ -39,11 +39,14 @@ class Rater(models.Model):
     zipcode = models.CharField(max_length=10)
 
     def __str__(self):
-        return "user #" + str(self.pk)
+        return "rater user #:" + str(self.pk)
 
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
+
+    def average_rating(self):
+        return self.rating_set.aggregate(models.Avg('stars'))['stars__avg']
 
     def __str__(self):
         return self.title
