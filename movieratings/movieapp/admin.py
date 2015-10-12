@@ -9,7 +9,7 @@ from .models import Rater, Movie
 
 
 class RaterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'age', 'gender', 'occupation', 'zipcode']
+    list_display = ['pk', 'age', 'gender', 'occupation', 'zipcode']
 
 
 class MovieAdmin(admin.ModelAdmin):

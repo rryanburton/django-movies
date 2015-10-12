@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -37,6 +37,7 @@ class Rater(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     occupation = models.IntegerField(choices=OCCUPATION_CHOICES)
     zipcode = models.CharField(max_length=10)
+    user = models.OneToOneField(User, primary_key=True)
 
     def __str__(self):
         return "rater user #:" + str(self.pk)

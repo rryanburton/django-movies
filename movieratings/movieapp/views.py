@@ -26,7 +26,7 @@ def rater_details(request, rater_id):
     return render(request,
                   'movieapp/rater_details.html',
                   {'rater': rater,
-                #    'average rating': average,
+                   #    'average rating': average,
                    'movie_ratings': movie_ratings})
 
 
