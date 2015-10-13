@@ -39,3 +39,7 @@ def top_movies(request):
     return render(request,
                   'movieapp/top_movies.html',
                   {'movies': top_20_mov})
+
+
+def all_movies(request):
+    Movie.movies.all()
