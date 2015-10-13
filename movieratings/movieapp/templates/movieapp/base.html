@@ -5,9 +5,16 @@
       <title></title>
   </head>
   <body>
-    <header>
-        <h1></h1>
-    </header>
+    <h1>Movie Ratings</h1><div style="float: right;">
++    {% if user.is_authenticated %}
++    Logged in as {{ user.username }} -
++    <a href="{% url 'logout' %}">Logout</a>
++    {% else %}
++    <a href="{% url 'login'%}">Login</a><br><br>
+     <a href="{% url 'user_register'%}">Register</a>
++    {% endif %}
++  </div>
+
       {% block content %}
       {% endblock %}
     <footer>

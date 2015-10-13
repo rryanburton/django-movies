@@ -31,7 +31,7 @@ def rater_details(request, rater_id):
 
 
 def top_movies(request):
-    popular_movies = Movie.objects.annotate(num_ratings=Count('rating')) \
+    popular_movies = Movie.objects.all().annotate(num_ratings=Count('rating')) \
         .filter(num_ratings__gte=25)
     top_mov = popular_movies.annotate(Avg('rating__stars'))
     top_20_mov = top_mov.order_by('-rating__stars__avg')[:20]
@@ -41,5 +41,13 @@ def top_movies(request):
                   {'movies': top_20_mov})
 
 
+def most_reviewed(request):
+    popular_movies = Movie.objects.all().annotate(num_ratings=Count('rating'))
+    most_rev = popular_movies.order_by('-num_ratings')[:20]
+    return render(request,
+                  'movieapp/most_rev.html',
+                  {'most_reviewed': most_rev})
+
+
 def all_movies(request):
-    Movie.movies.all()
+    Movie.objects.all()
