@@ -1,0 +1,16 @@
+{% extends "movieapp/base.html" %}
+
+{% block content %}
+
+
+<h2>Most Reviewed Movies</h2>
+
+
+<ul>
+  {% for movie in most_reviewed %}
+  <li><a href="{% url 'movie_details' movie.pk %}">{{ movie.title }}</a> - {{ movie.num_ratings }} ratings</li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}
