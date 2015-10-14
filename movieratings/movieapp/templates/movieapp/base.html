@@ -1,24 +1,35 @@
+{% load staticfiles %} {% load bootstrap3 %}
+
+
 <!DOCTYPE html>
 <html>
-  <head lang="en">
-      <meta charset="UTF-8">
-      <title></title>
-  </head>
-  <body>
-    <h1>Movie Ratings</h1><div style="float: right;">
-+    {% if user.is_authenticated %}
-+    Logged in as {{ user.username }} -
-+    <a href="{% url 'logout' %}">Logout</a>
-+    {% else %}
-+    <a href="{% url 'login'%}">Login</a><br><br>
-     <a href="{% url 'user_register'%}">Register</a>
-+    {% endif %}
-+  </div>
 
-      {% block content %}
-      {% endblock %}
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>MovieApp</title>
+  {% bootstrap_css %} {% bootstrap_javascript jquery=True %}
+  <link rel="stylesheet" type="text/css" href="{% static " style.css " %}">
+</head>
+
+<body>
+  <div class="container">
+    <h1>THE Movie Ratings Ultimate Ratingsbase</h1>
+
+    <div style="float: right;">
+      {% if user.is_authenticated %} Logged in as {{ user.username }}
+      <a href="{% url 'logout' %}">Logout</a> {% else %}
+      <a href="{% url 'login' %}">Login</a>
+
+      <a href="{% url 'user_register'%}">Register</a>
+      {% endif %}
+    </div>
+    {% bootstrap_messages %}
+    {% block content %}
+    {% endblock %}
     <footer>
-        <strong>Created from the MovieLens 1 million ratings+ dataset</strong>
+      <strong>Created from THE MovieLens Ratings Data</strong>
     </footer>
-  </body>
+  </div>
+</body>
+
 </html>

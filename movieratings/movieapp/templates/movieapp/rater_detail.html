@@ -1,4 +1,4 @@
-{% extends "movieapp/base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %}
 
 <h2 align="center">Rater: {{ rater.pk }}</h2>
 
@@ -16,7 +16,7 @@
 
   <ul>
     {% for rating in movie_ratings %}
-    <li> <a href="{% url 'movie_details' rating.movie.pk %}">{{ rating.movie }}</a> - {{ rating.stars }}</li>
+    <li> <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a> - {{ rating.stars }}</li>
     {% endfor %}
   </ul>
 
