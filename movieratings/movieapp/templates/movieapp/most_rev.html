@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+ {% load bootstrap3 %}
+{% block content %}
+
+
+<h2>Most Reviewed Movies</h2>
+
+
+<ul>
+  {% for movie in most_rev %}
+  <li><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a> - {{ movie.num_ratings }} ratings</li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}

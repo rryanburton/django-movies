@@ -1,7 +1,17 @@
+
+{% extends "base.html" %}
+ {% load bootstrap3 %}
+{% block content %}
+
+
 <h2>Top Movies</h2>
+<p>* with at least 25 ratings</p>
 
 <ul>
   {% for movie in movies %}
   <li><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a> - {{ movie.rating__stars__avg|floatformat }}</li>
   {% endfor %}
 </ul>
+{# {% bootstrap_pagination page_obj %}#}
+
+{% endblock %}

@@ -16,7 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from users import views as user_views
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('movies.urls')),
+    url(r'^login/$', user_views.user_login, name='user_login'),
+    url(r'^register/$', user_views.user_register, name='user_register'),
+
+    url(r'^logout/$', user_views.logout_view, name='user_logout'),
+    url(r'^', include('movieapp.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
