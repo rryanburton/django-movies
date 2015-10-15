@@ -1,4 +1,4 @@
-{% extends "movieapp/base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %}{% load bootstrap3 %}
 <h2 align="center">{{ movie.title }}</h2>
 
 
@@ -6,7 +6,7 @@
 Average Rating {{ movie.average_rating|floatformat }}
 <ul>
   {% for rating in movie.rating_set.all %}
-  <li><li><a href="{% url "rater_detail" rating.rater.pk %}">{{ rating.rater }}</a>: {{ rating.stars }}</li>
+  <li><a href="{% url "rater_detail" rating.rater.pk %}">{{ rating.rater }}</a>: {{ rating.stars }}</li>
 
 
   {% endfor %}

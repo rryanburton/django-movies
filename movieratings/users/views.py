@@ -1,22 +1,25 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.decorators import login_required
-# from django.contrib import messages
+from django.contrib import messages
 
 from .forms import UserForm, RaterForm
 
 
 def user_login(request):
     if request.method == 'POST':
-        # attempting to log in
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
 
         if user is not None and user.is_active:
             login(request, user)
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 "{} you are now ".format(user.username))
             return redirect('top_movies')
+
         else:
             return render(request,
                           'users/login.html',
@@ -24,8 +27,8 @@ def user_login(request):
                            'username': username})
 
     return render(request,
-                  'users/login.html')
-
+                  'users/login.html',
+                  {})
 # Create your views here.
 
 
